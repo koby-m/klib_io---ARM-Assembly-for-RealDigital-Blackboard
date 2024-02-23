@@ -1,5 +1,5 @@
 **Name:**                
-Name
+klib_io (written in ARM Assembly)
 
 **Version:**            
 1.0.0
@@ -10,10 +10,18 @@ Name
 Koby Miller
 
 **Date last modified:**   
-Date
+February 23rd, 2024
 
 **Description:**        
-Words
+A library including useful functions concerning the RealDigital Blackboard, such as functions to use
+on-board GPIO devices:<br>
+- LEDs<br>
+- Buttons<br>
+- Switches<br>
+- RGB LEDs<br>
+- Seven-segment display<br>
+_Memory address macros were made by consulting the reference manual on the RealDigital website:_<br>
+https://www.realdigital.org/hardware/blackboard
 
 **Changelog:**
-List
+N/A
