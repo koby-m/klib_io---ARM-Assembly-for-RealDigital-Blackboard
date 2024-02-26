@@ -1,3 +1,19 @@
+@ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+@
+@        Library Name:           
+@								Klib-io (for RealDigital Blackboard)
+@        
+@        Version:                
+@								1.0.0 
+@
+@        Contributor(s):         
+@								Koby Miller
+@
+@        Date last modified:     
+@								February 23rd, 2024
+@
+@ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
 .ifndef KLIB_IO_ARM_ASSEMBLY_
 .set KLIB_IO_ARM_ASSEMBLY_, 1
 
@@ -447,7 +463,6 @@ dummyTimer:
 	
 	DummyTimerLoop:
 		@ Literal nonsense
-		
 		sub r0, r0, #1
 	
 	cmp r0, #0
