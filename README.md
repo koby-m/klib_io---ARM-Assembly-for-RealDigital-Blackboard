@@ -2,7 +2,7 @@
 klib_io (written in ARM Assembly)
 
 **Version:**            
-1.0.0
+1.1.0
 
 **Dependancies[0]:**       
 
@@ -24,4 +24,4 @@ _Memory address macros were made by consulting the reference manual on the RealD
 https://www.realdigital.org/hardware/blackboard
 
 **Changelog:**
-N/A
+Added intMod and intDivide
