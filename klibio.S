@@ -10,7 +10,7 @@
 @								Koby Miller
 @
 @        Date last modified:     
-@								February 23rd, 2024
+@								February 26th, 2024
 @
 @ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
@@ -473,8 +473,120 @@ dummyTimer:
 bx lr
 
 @ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+@ intDivide
+@ Perform integer division
+@
+@	r1		parameter -> operand one
+@	r2		parameter -> operand two
+@
+@	r0 		return -> integer quotient
+@
+@ Written by Koby Miller
+@ Last modified: February 28th, 2024
+@ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+intDivide:
+	push {r3,r4,r5,r6}
+	mov r3, r1 @ create a copy of operand one, also used as remainder
+	mov r4, r2 @ create a copy of operand two
+	mov r6, #0 @ counter
+	
+	cmp r1, #0	@ determine if first operand is positive or negative
+	bge posDivOperandOne
+	ble negDivOperandOne
+	beq leaveIntDivide
+	
+	posDivOperandOne:
+		cmp r2, #0 @ determine to count positive or negative
+		movge r5, #1 @ if positive
+		movle r5, #-1 @ if negative
+		suble r4, r4, #1 @ make positive part 1
+		mvnle r4, r4 @ make positive part 2
+		beq leaveIntDivide @ if dividing by zero
+		
+	posDivOperandOneLoop:
+
+		sub r3, r3, r4 @ subtract operand two from operand one over and over until zero or negative
+
+	cmp r3, #0 @ loop and count check
+	addge r6, r6, r5 @ increment counter
+	bge posDivOperandOneLoop
+	b leaveIntDivide @ break
+	
+	negDivOperandOne:
+		cmp r2, #0 
+		
+		movge r5, #-1 @ if positive
+		
+		movle r5, #1 @ if negative
+		
+		suble r4, r4, #1 @ make negative part 1
+		mvnle r4, r4 @ make negative part 2
+		beq leaveIntDivide @ if dividing by zero
+		
+	negDivOperandOneLoop:
+	
+		add r3, r3, r4  @ add operand one and operand two over and over until zero or positive
+	
+	cmp r3, #0 @ loop and count check
+	addle r6, r6, r5 @ increment counter
+	ble negDivOperandOneLoop
+	@b leaveIntDivide @ break
+	
+	leaveIntDivide:
+	mov r0, r6
+	pop {r3,r4,r5,r6}
+bx lr
+
+@ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+@ intMod
+@ Perform integer modulus 
+@
+@	r1		parameter -> operand one
+@	r2		parameter -> operand two
+@
+@	r0 		return -> integer remainder
+@
+@ Written by Koby Miller
+@ Last modified: February 26th, 2024
+@ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+intMod:
+	push {r3,r4}
+	mov r3, r1 @ create a copy of operand one, also used as remainder
+	mov r4, r2 @ create a copy of operand two
+
+	cmp r2, #0 @ if dividing by zero
+	beq leaveIntMod
+
+	cmp r1, #0 	@ determine if first operand is positive or negative
+	bge posModOperandOne
+	ble negModOperandOne
+	beq leaveIntMod @ break
+
+	posModOperandOne:
+
+		sub r3, r3, r4 @ subtract operand two from operand one over and over until zero or negative
+
+	cmp r3, #0
+	addle r3, r3, r4 @ step back one so that it is correct remainder
+	bge posModOperandOne
+
+	b leaveIntMod
+
+	negModOperandOne:
+
+		add r3, r3, r4 @ add operand one and operand two over and over until zero or positive
+
+	cmp r3, #0
+	subge r3, r3, r4 @ step back one so that it is correct remainder
+	ble negModOperandOne
+	@b leaveIntMod @ break
+
+	leaveIntMod:
+	mov r0, r3
+	pop {r3,r4}
+bx lr
+
+@ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 @ EoF
 @ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-.endif
-
-
+.endif 
