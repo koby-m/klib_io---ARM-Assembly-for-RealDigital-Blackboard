@@ -4,13 +4,13 @@
 @								Klib-io (for RealDigital Blackboard)
 @        
 @        Version:                
-@								1.0.0 
+@								1.1.0 
 @
 @        Contributor(s):         
 @								Koby Miller
 @
 @        Date last modified:     
-@								February 26th, 2024
+@								February 28th, 2024
 @
 @ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
@@ -547,7 +547,7 @@ bx lr
 @	r0 		return -> integer remainder
 @
 @ Written by Koby Miller
-@ Last modified: February 26th, 2024
+@ Last modified: February 28th, 2024
 @ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 intMod:
 	push {r3,r4}
